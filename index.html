@@ -8,49 +8,159 @@
     <style>
         body {
             margin: 0;
-            background: #ffe6eb;
+            background: radial-gradient(#4c0c0c, #000000);
+            /* dark background */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             height: 100vh;
-            overflow: hidden;
             font-family: 'Arial', sans-serif;
             touch-action: manipulation;
+            position: relative;
         }
 
-        .heart-wrapper {
-            transform: rotate(320deg);
+        /* Star background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.1;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         .heart {
-            width: 100px;
-            height: 90px;
             position: relative;
-            background: red;
-            transform: rotate(-45deg);
-            animation: beat 1s infinite;
-            margin-top: 50px;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: "";
-            width: 100px;
-            height: 90px;
-            position: absolute;
-            background: red;
-            border-radius: 50%;
+            width: 300px;
+            height: 300px;
+            animation: glow 2s ease-in-out infinite, slowZoom 10s ease-in-out infinite;
         }
 
         .heart::before {
-            top: -50px;
-            left: 0;
+            content: '';
+            top: -100px;
+            left: 20px;
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: #f00;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            rotate: 315deg;
+            z-index: 1000;
+            animation: glow 2s ease-in-out infinite;
         }
 
         .heart::after {
-            top: 0;
-            left: 50px;
+            content: '';
+            top: -100px;
+            left: 90px;
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: #f00;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            rotate: 45deg;
+            z-index: 1000;
+            animation: glow 2s ease-in-out infinite;
+            box-shadow: 0 0 10px #f00;
+        }
+
+        @keyframes slowZoom {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.05) rotate(1deg);
+            }
+        }
+
+        /* Animasi Gelap-Terang */
+
+
+        .drop {
+            position: absolute;
+            top: 40px;
+            width: 30px;
+            height: 30px;
+            filter: drop-shadow(5px 5px 10px #000) drop-shadow(0px 0px 10px #f00);
+            transform-origin: bottom;
+            animation: animate 4s linear forwards;
+        }
+
+        .drop::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: #f00;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transform-origin: bottom center;
+            rotate: -45deg;
+            z-index: 100000;
+        }
+
+        .drop::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            width: 30px;
+            height: 20px;
+            background: #f00;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            transform-origin: bottom center;
+            rotate: 315deg;
+            z-index: 100000;
+        }
+
+        @keyframes animate {
+            0% {
+                top: 40px;
+                opacity: 1;
+                scale: 1;
+            }
+
+            70% {
+                top: 400px;
+                opacity: 1;
+            }
+
+            80% {
+                top: 400px;
+            }
+
+            100% {
+                top: 400px;
+                opacity: 0;
+                scale: 0;
+            }
         }
 
         @keyframes beat {
@@ -66,17 +176,21 @@
         }
 
         .message {
+            font-weight: bold;
             margin-top: 30px;
-            font-size: 2rem;
-            color: #d40059;
+            font-size: 2.5rem;
+            color: #d40035;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
+            animation: fadeIn 2s ease-in-out, text 2s ease-in-out infinite alternate;
+            z-index: 1;
         }
 
         .sub-message {
-            font-size: 1.2rem;
-            color: #444;
+            font-size: 1.5rem;
+            color: #ccc;
             margin-top: 10px;
+            animation: fadeIn 2s ease-in-out, text 2s ease-in-out infinite alternate;
+            z-index: 2;
         }
 
         @keyframes fadeIn {
@@ -91,6 +205,28 @@
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes text {
+            from {
+                text-shadow: 0 0 4px #ff99cc, 0 0 8px #ff99cc, 0 0 16px #ff99cc;
+            }
+
+            to {
+                text-shadow: 0 0 8px #ff66aa, 0 0 16px #ff66aa, 0 0 24px #ff66aa;
+            }
+        }
+
         .small-heart {
             position: absolute;
             width: 10px;
@@ -98,6 +234,7 @@
             background: red;
             transform: rotate(45deg);
             animation: floatUp 1s ease-out forwards;
+            z-index: 2;
         }
 
         .small-heart::before,
@@ -136,23 +273,56 @@
 
 <body>
 
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
     <!-- Heart -->
-    <div class="heart-wrapper">
-        <div class="heart"></div>
+    <div class="heart">
     </div>
 
     <!-- Romantic Message -->
     <div class="message">Sayangkuu, Suci Ramadhani 💕</div>
-    <div class="sub-message">I Love You 😘, Aku kangen kamu😖</div>
+    <div class="sub-message">I Love You 😘, Aku kangen kamu 😖</div>
 
     <!-- Audio Music -->
     <audio id="bgm" autoplay loop>
-        <!-- Ganti URL MP3 di bawah ini sesuai lagu kamu -->
         <source src="https://files.catbox.moe/0v31ba.mp3" type="audio/mp3">
         Browser kamu tidak mendukung audio.
     </audio>
 
     <script>
+        function rain() {
+            let heart = document.querySelector('.heart');
+            let e = document.createElement('div');
+            e.classList.add('drop');
+            heart.appendChild(e);
+
+            let left = Math.floor(Math.random() * 300);
+            let duration = Math.random() * 0.5;
+
+            e.style.left = left + 'px';
+            e.style.animationDuration = 1 + duration + 's';
+
+            setTimeout(function () {
+                heart.removeChild(e)
+            }, 5000)
+        }
+        setInterval(function () {
+            rain()
+        }, 50);
+
+        // Buat bintang animasi random
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDelay = (Math.random() * 5) + 's';
+            star.style.opacity = Math.random();
+            starsContainer.appendChild(star);
+        }
+
         // Klik layar, munculkan hati kecil
         document.body.addEventListener('click', (e) => {
             const heart = document.createElement('div');
@@ -174,7 +344,6 @@
             }
         });
     </script>
-
 </body>
 
 </html>
