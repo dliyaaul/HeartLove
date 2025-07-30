@@ -305,12 +305,20 @@
             e.style.animationDuration = 1 + duration + 's';
 
             setTimeout(function () {
-                heart.removeChild(e)
+                if (heart.contains(e)) {
+                    heart.removeChild(e);
+                }
             }, 5000)
         }
-        setInterval(function () {
-            rain()
-        }, 50);
+        const rainInterval = setInterval(rain, 50);
+
+        // Hentikan setelah 60 detik
+        setTimeout(() => {l
+            clearInterval(rainInterval);
+
+            // Bersihkan drops sisa
+            document.querySelectorAll('.drop').forEach(el => el.remove());
+        }, 60000);
 
         // Buat bintang animasi random
         const starsContainer = document.getElementById('stars');
