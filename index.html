@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sayangkuu, Suci Ramadhani 💖</title>
+    <style>
+        body {
+            margin: 0;
+            background: #ffe6eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .heart-wrapper {
+            transform: rotate(320deg);
+        }
+
+        .heart {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            background: red;
+            transform: rotate(-45deg);
+            animation: beat 1s infinite;
+            margin-top: 50px;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 100px;
+            height: 90px;
+            position: absolute;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 50px;
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .message {
+            margin-top: 30px;
+            font-size: 2rem;
+            color: #d40059;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .sub-message {
+            font-size: 1.2rem;
+            color: #444;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .small-heart {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            transform: rotate(45deg);
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        .small-heart::before,
+        .small-heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .small-heart::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .small-heart::after {
+            top: 0;
+            left: -5px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Heart -->
+    <div class="heart-wrapper">
+        <div class="heart"></div>
+    </div>
+
+    <!-- Romantic Message -->
+    <div class="message">Sayangkuu, Suci Ramadhani 💕</div>
+    <div class="sub-message">I Love You 😘</div>
+
+    <!-- Audio Music -->
+    <audio id="bgm" autoplay loop>
+        <!-- Ganti URL MP3 di bawah ini sesuai lagu kamu -->
+        <source src="https://files.catbox.moe/0v31ba.mp3" type="audio/mp3">
+        Browser kamu tidak mendukung audio.
+    </audio>
+
+    <script>
+        // Klik layar, munculkan hati kecil
+        document.body.addEventListener('click', (e) => {
+            const heart = document.createElement('div');
+            heart.className = 'small-heart';
+            heart.style.left = (e.clientX - 5) + 'px';
+            heart.style.top = (e.clientY - 5) + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        });
+
+        // Auto-play fix (jika dibuka pertama kali di browser yang memblokir autoplay)
+        window.addEventListener('click', () => {
+            const bgm = document.getElementById('bgm');
+            if (bgm.paused) {
+                bgm.play();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
